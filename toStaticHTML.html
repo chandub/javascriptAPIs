@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>A simple demo of toStaticHTML</title>
+    <style>
+        input {
+            width:400px;
+        }
+        #output {
+            margin-top:20px;
+        }
+    </style>
+</head>
+<body>
+    Enter text:
+    <input type="text" value="<script>alert('malicious');</script>I'm normal text" id="inp"/>
+    <button type="submit" id="btn">Submit</button>
+    <div id="output"></div>
+
+    <script type="text/javascript">
+        (function () {
+
+            function sanitizeInput() {
+                if (!window.toStaticHTML) {
+                    alert("Your browser do not support 'toStaticHTML' function");
+                    return;
+                }
+
+                var inputVal = document.querySelector("#inp").value
+
+                /* Method: window.toStaticHTML
+                 * Supported in IE8+ browsers
+                 * Useful in HTML5 windows8 application 
+                 */
+                document.getElementById("output").innerHTML = "Sanitized output: "+window.toStaticHTML(inputVal);
+            }
+
+            document.getElementById("btn").addEventListener("click",sanitizeInput, false);
+        })();
+    </script>
+</body>
+</html>
